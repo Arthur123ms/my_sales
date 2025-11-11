@@ -1,0 +1,65 @@
+{
+  // Visit https://aka.ms/tsconfig to read more about this file
+  "compilerOptions": {
+    "baseUrl": "./",
+    "paths": {
+      "@config/*": ["src/config/*"],
+      "@moodules/*": ["src/modules/*"],
+      "@shared": ["src/shared/*"],
+      "src/*": ["src/*"]
+    },
+    "rootDir": "src",
+    "outDir": "build",
+
+    // Environment Settings
+    // See also https://aka.ms/tsconfig/module
+    "module": "commonjs",
+    "target": "esnext",
+    "types": ["node"],
+    "lib": ["es6", "DOM"],
+    // For nodejs:
+    // "lib": ["esnext"],
+    // "types": ["node"],
+    // and npm install -D @types/node
+
+    // Other Outputs
+    "sourceMap": true,
+    "declaration": true,
+    "declarationMap": true,
+
+    // Stricter Typechecking Options
+    "noUncheckedIndexedAccess": true,
+    "exactOptionalPropertyTypes": true,
+
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    // Style Options
+    // "noImplicitReturns": true,
+    // "noImplicitOverride": true,
+    // "noUnusedLocals": true,
+    // "noUnusedParameters": true,
+    // "noFallthroughCasesInSwitch": true,
+    // "noPropertyAccessFromIndexSignature": true,
+
+    // Recommended Options
+    "strictPropertyInitialization": true,
+    "strict": true,
+    "jsx": "react-jsx",
+    "isolatedModules": true,
+    "noUncheckedSideEffectImports": true,
+    "moduleDetection": "force",
+    "skipLibCheck": true,
+
+    "esModuleInterop": true,
+    "resolveJsonModule": true,
+    "allowJs": true,
+    "noImplicitAny": true
+  },
+
+  // Exclude files outside src to avoid compiling or emitting config files and build output
+  "exclude": [
+    "eslint.config.js",
+    "node_modules",
+    "build"
+  ]
+}

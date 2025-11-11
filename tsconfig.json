@@ -42,7 +42,7 @@
     // "noPropertyAccessFromIndexSignature": true,
 
     // Recommended Options
-    "strictPropertyInitialization": true,
+    "strictPropertyInitialization": false,
     "strict": true,
     "jsx": "react-jsx",
     "isolatedModules": true,

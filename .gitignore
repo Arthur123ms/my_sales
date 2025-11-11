@@ -1,0 +1,10 @@
+node-modudles/
+build/
+.vscode/
+.idea/
+.env
+temp/
+coverage
+ormconfig.json
+dist
+

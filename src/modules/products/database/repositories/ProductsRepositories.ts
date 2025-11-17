@@ -9,5 +9,9 @@ export const productsRepositories = AppDataSource.getRepository(Product).extend(
       //findOneBy é um  método to TypeOrm que busca um registro pelo campo especificado (no caso 'name')
       return this.findOneBy({ name });
     },
+
+    async findById(id: string): Promise<Product | null> {
+      return this.findOneBy({ id })
+    },
   },
-);
+)

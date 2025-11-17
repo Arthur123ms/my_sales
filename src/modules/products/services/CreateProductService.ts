@@ -9,7 +9,7 @@ interface ICreateProduct {
 }
 
 export default class CreateProductService {
-  async excute({ name, price, quantity }: ICreateProduct): Promise<Product> {
+  async execute({ name, price, quantity }: ICreateProduct): Promise<Product> {
     const productExists = await productsRepositories.findByName(name);
 
     if (productExists) {

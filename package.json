@@ -3,17 +3,16 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
-"scripts": {
-  "dev": "ts-node-dev -r tsconfig-paths/register --inspect --transpile-only --ignore-watch node_modules src/shared/http/server.ts",
-  "lint": "eslint . --ext .ts",
-  "lint-fix": "eslint . --ext .ts --fix",
-  "typeorm": "ts-node -r tsconfig-paths/register ./node_modules/typeorm/cli.js",
-  "migration:create": "npm run typeorm -- migration:create ./src/shared/typeorm/migrations",
-  "migration:generate": "npm run typeorm -- migration:generate ./src/shared/typeorm/migrations -d src/shared/typeorm/data-source.ts",
-  "migration:run": "ts-node -r tsconfig-paths/register ./node_modules/typeorm/cli.js migration:run -d src/shared/typeorm/data-source.ts",
-  "migration:revert": "npm run typeorm -- migration:revert -d src/shared/typeorm/data-source.ts"
-},
-
+  "scripts": {
+    "dev": "ts-node-dev -r tsconfig-paths/register --inspect --transpile-only --ignore-watch node_modules src/shared/http/server.ts",
+    "lint": "eslint . --ext .ts",
+    "lint-fix": "eslint . --ext .ts --fix",
+    "typeorm": "ts-node -r tsconfig-paths/register ./node_modules/typeorm/cli.js",
+    "migration:create": "cross-env MIGRATION_NAME=$npm_config_name ts-node -r tsconfig-paths/register ./node_modules/typeorm/cli.js migration:create src/shared/typeorm/migrations/$npm_config_name",
+    "migration:generate": "npm run typeorm -- migration:generate ./src/shared/typeorm/migrations -d src/shared/typeorm/data-source.ts",
+    "migration:run": "ts-node -r tsconfig-paths/register ./node_modules/typeorm/cli.js migration:run -d src/shared/typeorm/data-source.ts",
+    "migration:revert": "npm run typeorm -- migration:revert -d src/shared/typeorm/data-source.ts"
+  },
   "keywords": [],
   "author": "",
   "license": "ISC",
@@ -22,6 +21,7 @@
     "@eslint/js": "^9.39.1",
     "@types/cors": "^2.8.19",
     "@types/express": "^5.0.5",
+    "@types/joi": "^17.2.2",
     "@types/node": "^24.10.0",
     "@typescript-eslint/eslint-plugin": "^8.46.3",
     "@typescript-eslint/parser": "^8.46.3",
@@ -37,6 +37,7 @@
     "typescript-eslint": "^8.46.3"
   },
   "dependencies": {
+    "celebrate": "^15.0.3",
     "cors": "^2.8.5",
     "cross-env": "^10.1.0",
     "dotenv": "^17.2.3",

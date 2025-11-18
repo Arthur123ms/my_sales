@@ -1,4 +1,3 @@
-import { throwDeprecation } from 'process';
 import { usersRespositories } from '../database/repositories/UserRepositories';
 import AppError from 'src/shared/errors/appError';
 import { hash } from 'bcrypt';

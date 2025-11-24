@@ -9,5 +9,6 @@ routes.get('/health', (request, response) => {
 });
 routes.use('/products', productRouter)
 routes.use('/users', userRouter)
+routes.use('/session', userRouter)
 
 export default routes;

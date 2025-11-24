@@ -1,5 +1,5 @@
 import { Response, Request } from 'express';
-import ListUserService from '../services/LIstUserSevice';
+import ListUserService from '../services/ListUserSevice';
 import CreateUserService from '../services/CreateUserService';
 
 export default class UserController {

@@ -1,6 +1,7 @@
 import express from 'express';
 import cors from 'cors';
-import { errors } from 'celebrate'
+import 'express-async-errors';
+import { errors } from 'celebrate';
 import routes from './routes';
 import { AppDataSource } from '../typeorm/data-source';
 import 'express-async-errors';
@@ -13,7 +14,7 @@ AppDataSource.initialize()
     app.use(cors());
     app.use(express.json());
 
-    app.use(errors())
+    app.use(errors());
     app.use(routes);
 
     app.use(ErrorHandleMiddleware.handleError);

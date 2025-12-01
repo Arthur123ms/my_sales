@@ -5,6 +5,6 @@ import { sessionSchemaValidation } from '../schemas/SessionSchema';
 const sessionRouter = Router();
 const sessionController = new SessionControllers();
 
-sessionRouter.post('/', sessionSchemaValidation, sessionController.create)
+sessionRouter.post('/', sessionSchemaValidation, sessionController.create);
 
-export default sessionRouter
+export default sessionRouter;

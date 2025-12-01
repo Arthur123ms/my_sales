@@ -2,7 +2,7 @@ import { compare } from 'bcrypt';
 import { User } from '../database/entities/Users';
 import { usersRespositories } from '../database/repositories/UserRepositories';
 import AppError from 'src/shared/errors/appError';
-import { sign } from 'jsonwebtoken';
+import { Secret, sign } from 'jsonwebtoken';
 
 interface ISessionUser {
   email: string;
@@ -16,7 +16,7 @@ interface ISessionResponse {
 
 export default class SessionUserService {
   async execute({ email, password }: ISessionUser): Promise<ISessionResponse> {
-    const user = await usersRespositories().findByEmail(email);
+    const user = await usersRespositories.findByEmail(email);
 
     if (!user) {
       throw new AppError('Incorrect email/password combination', 401);

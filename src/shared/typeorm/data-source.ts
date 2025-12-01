@@ -2,7 +2,7 @@ import 'reflect-metadata';
 import 'dotenv/config';
 import { DataSource } from 'typeorm';
 import { Product } from 'src/modules/products/database/entities/Product';
-import { User } from '@moodules/users/database/entities/Users';
+import { User } from 'src/modules/users/database/entities/Users';
 
 export const AppDataSource = new DataSource({
   type: 'postgres',

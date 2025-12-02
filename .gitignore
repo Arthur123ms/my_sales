@@ -2,9 +2,12 @@ node-modudles/
 build/
 .vscode/
 .idea/
+build/
 .env
 temp/
 coverage
 ormconfig.json
 dist
 
+uploads/*
+!uploads/.gitkeep

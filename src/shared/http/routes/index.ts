@@ -2,6 +2,7 @@ import productRouter from '@moodules/products/routes/ProductRoutes';
 import userRouter from '@moodules/users/routes/UserRoutes';
 import sessionRouter from '@moodules/users/routes/SessionRoutes';
 import { Router } from 'express';
+import avatarRouter from '@moodules/users/routes/AvatarRoutes';
 
 const routes = Router();
 
@@ -11,5 +12,6 @@ routes.get('/health', (request, response) => {
 routes.use('/products', productRouter)
 routes.use('/users', userRouter)
 routes.use('/session', sessionRouter)
+routes.use('/avatar', avatarRouter)
 
 export default routes;

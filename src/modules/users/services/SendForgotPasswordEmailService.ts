@@ -1,21 +1,40 @@
 import AppError from 'src/shared/errors/appError';
-import { usersRespositories } from "../database/repositories/UserRepositories";
-import { userTokenRepositories } from '../database/repositories/UserTokensRepositories'
+import { usersRespositories } from '../database/repositories/UserRepositories';
+import { userTokenRepositories } from '../database/repositories/UserTokensRepositories';
+import { sendEmail } from '@config/email';
 
 interface IForgotPassword {
-  email: string
+  email: string;
 }
 
 export default class SendForgotPasswordEmailService {
   async execute({ email }: IForgotPassword): Promise<void> {
-    const user = await usersRespositories.findByEmail(email)
+    const user = await usersRespositories.findByEmail(email);
 
-    if(!user) {
-      throw new AppError('User no found', 404)
+    if (!user) {
+      throw new AppError('User no found', 404);
     }
 
-    const token = await userTokenRepositories.generate(user.id)
+    const token = await userTokenRepositories.generate(user.id);
 
-    console.log(token)
+    sendEmail({
+      to: user.email,
+      subject: 'My sales Recovery Passsword',
+      body: `
+        <div style='font-family: Arial, sans-serif; padding: 20px;; color: #333;
+      text - aling: center; border: 2px solid #041d40; border- radius: 10px; margin: auto; width: 60 %';>
+
+      <h1 style="color : #041d40";>Passowrd Reset Verification Code</h1>
+      <h3 style="color : #041d40";>Dear ${user.name},</h3>
+      <p style="font-size: 16px; color: #333;">Recover your password with this token:</p>
+      <p>
+      <strong style="border: 2px dashed #041d40; padding: 10px;
+      border-radius: 5px; font-size: 16px; color: #041d40;">${token?.token}</strong>
+      </p>
+      <p style="margin-top: 20px;">Best regards,<br><span style="font-weight: bold; color: #041d40;">My Sales Staff
+      </span></p>
+      </div>
+    `,
+    });
   }
-} 
+}

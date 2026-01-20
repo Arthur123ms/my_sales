@@ -17,7 +17,7 @@ export default class ResetPasswordService {
       throw new AppError('User not found', 404);
     }
 
-    const user = await usersRespositories.findById(userToken.id);
+    const user = await usersRespositories.findById(userToken.user_id);
 
     if (!user) {
       throw new AppError('User not found', 404);

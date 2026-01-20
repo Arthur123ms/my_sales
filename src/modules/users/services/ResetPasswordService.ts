@@ -27,7 +27,7 @@ export default class ResetPasswordService {
     const compareDate = addHours(tokenCreatedAt, 2);
 
     if (isAfter(Date.now(), compareDate)) {
-      throw new AppError('User not found', 404);
+      throw new AppError('User not found', 401);
     }
 
     user.password = await hash(password, 10);

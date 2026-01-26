@@ -1,6 +1,5 @@
 import express from 'express';
 import cors from 'cors';
-import 'express-async-errors';
 import { errors } from 'celebrate';
 import routes from './routes';
 import { AppDataSource } from '../typeorm/data-source';

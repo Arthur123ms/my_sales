@@ -1,9 +1,20 @@
-import { Column, CreateDateColumn, UpdateDateColumn, Entity, PrimaryGeneratedColumn } from "typeorm"
+import { OrdersProducts } from '@moodules/orders/database/entities/OrdersProducts';
+import {
+  Column,
+  CreateDateColumn,
+  UpdateDateColumn,
+  Entity,
+  PrimaryGeneratedColumn,
+  OneToMany,
+} from 'typeorm';
 
 @Entity('products')
 export class Product {
   @PrimaryGeneratedColumn()
   id: string;
+
+  @OneToMany(() => OrdersProducts, order_products => order_products.products)
+  order_products: OrdersProducts[];
 
   @Column({ type: 'text' })
   name: string;

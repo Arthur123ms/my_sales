@@ -22,7 +22,7 @@ export class Order {
   @OneToMany(() => OrdersProducts, order_products => order_products.order, {
     cascade: true,
   })
-  order_prodcuts: OrdersProducts[];
+  order_products: OrdersProducts[];
 
   @CreateDateColumn()
   create_at: Date;

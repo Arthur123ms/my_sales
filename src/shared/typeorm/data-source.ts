@@ -5,6 +5,8 @@ import { Product } from 'src/modules/products/database/entities/Product';
 import { User } from 'src/modules/users/database/entities/Users';
 import UserToken from '@moodules/users/database/entities/UserToken';
 import { Customer } from 'src/modules/customers/database/entities/Customer';
+import { Order } from '@moodules/orders/database/entities/Order';
+import { OrdersProducts } from '@moodules/orders/database/entities/OrdersProducts';
 
 export const AppDataSource = new DataSource({
   type: 'postgres',
@@ -13,7 +15,7 @@ export const AppDataSource = new DataSource({
   username: process.env.DB_USER!,
   password: process.env.DB_PASS!,
   database: process.env.DB_NAME!,
-  entities: [Product, User, UserToken, Customer], // <-- ESSENCIAL
+  entities: [Product, User, UserToken, Customer, Order, OrdersProducts], // <-- ESSENCIAL
   migrations: [__dirname + '/migrations/*.{ts,js}'],
   synchronize: true,
 });

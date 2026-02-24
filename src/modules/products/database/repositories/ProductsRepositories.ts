@@ -1,5 +1,10 @@
 import { AppDataSource } from 'src/shared/typeorm/data-source'; //Conecta com o banco de dados
 import { Product } from '../entities/Product';
+import { In } from 'typeorm';
+
+interface IFindProducts {
+  id: number;
+}
 
 //Cria o repositório de Produtos baseado no banco de dados
 export const productsRepositories = AppDataSource.getRepository(Product).extend(
@@ -10,8 +15,17 @@ export const productsRepositories = AppDataSource.getRepository(Product).extend(
       return this.findOneBy({ name });
     },
 
-    async findById(id: string): Promise<Product | null> {
-      return this.findOneBy({ id })
+    async findById(id: number): Promise<Product | null> {
+      return this.findOneBy({ id });
+    },
+
+    async findAllByIds(products: IFindProducts[]): Promise<Product[]> {
+      const productsIds = products.map(product => product.id);
+
+      const existentProducts = await this.find({
+        where: { id: In(productsIds) },
+      });
+      return existentProducts;
     },
   },
-)
+);

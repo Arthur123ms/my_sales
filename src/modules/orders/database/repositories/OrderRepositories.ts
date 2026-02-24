@@ -5,14 +5,20 @@ import { OrdersProducts } from '../entities/OrdersProducts';
 
 interface ICreateOrder {
   customer: Customer;
-  products: OrdersProducts[];
+  products: ICreateOrderProducts[];
 }
 
-export const OrderRepositories = AppDataSource.getRepository(Order).extend({
+interface ICreateOrderProducts {
+  product_id: number,
+  price: number,
+  quantity: number
+}
+
+export const orderRepositories = AppDataSource.getRepository(Order).extend({
   async findById(id: number): Promise<Order | null> {
     const order = await this.findOne({
       where: { id },
-      relations: ['order_products', 'customer'],
+      relations: ['orders_products', 'customers'],
     });
 
     return order;

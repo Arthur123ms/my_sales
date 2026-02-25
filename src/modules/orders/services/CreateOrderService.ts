@@ -48,26 +48,21 @@ export class CreateOrderService {
 
     if (quantityAvailable.length) {
       throw new AppError(
-        `The quantity ${quantityAvailable[0]?.quantity}
-        is not available for ${quantityAvailable[0]?.id}`,
-        409,
-      );
+        `The quantity is not available for`, 409);
     }
 
     const seriealizedProducts = products.map(product => {
-      const productExists = existsProducts.find(
-        p => p.id === product.id
-      );
+      const productExists = existsProducts.find(p => p.id === product.id);
 
       if (!productExists) {
-        throw new AppError (`Product ${product.id} not found.`)
-      };
+        throw new AppError(`Product ${product.id} not found.`);
+      }
 
       return {
         product_id: product.id,
         quantity: product.quantity,
-        price: product.price
-      }
+        price: product.price,
+      };
     });
 
     const order = await orderRepositories.createOrder({
@@ -88,13 +83,11 @@ export class CreateOrderService {
 
       return {
         id: product.product.id,
-        quantity: productExists.quantity - product.quantity
-      }
-
-
+        quantity: productExists.quantity - product.quantity,
+      };
     });
 
-    await productsRepositories.save(updateProductsQuantity)
+    await productsRepositories.save(updateProductsQuantity);
 
     return order;
   }

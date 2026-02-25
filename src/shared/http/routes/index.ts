@@ -7,6 +7,7 @@ import uploadConfig from '@config/upload';
 import passwordRouter from '@moodules/users/routes/PasswordRoutes';
 import profileRouter from '@moodules/users/routes/ProfileRoutes';
 import customerRouter from '@moodules/customers/routes/CustomerRoutes';
+import orderRouter from '@moodules/orders/routes/OrderRoutes';
 
 const routes = Router();
 
@@ -21,5 +22,6 @@ routes.use('/files', express.static(uploadConfig.directory));
 routes.use('/password', passwordRouter);
 routes.use('/profiles', profileRouter);
 routes.use('/customers', customerRouter);
+routes.use('/orders', orderRouter)
 
 export default routes;

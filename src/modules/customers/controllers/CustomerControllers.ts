@@ -7,8 +7,11 @@ import DeleteCustomerService from '../services/DeleteCustomerService';
 
 export default class CustomerController {
   async index(request: Request, response: Response): Promise<Response> {
+    const page = parseInt(request.query.page as string) || 1;
+    const limite = parseInt(request.query.limite as string) || 10;
+
     const listCustomer = new LisCustomerService();
-    const customer = await listCustomer.execute();
+    const customer = await listCustomer.execute(page, limite);
     return response.json(customer);
   }
 

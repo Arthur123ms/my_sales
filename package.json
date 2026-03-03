@@ -8,7 +8,7 @@
     "lint": "eslint . --ext .ts",
     "lint-fix": "eslint . --ext .ts --fix",
     "typeorm": "ts-node -r tsconfig-paths/register ./node_modules/typeorm/cli.js",
-    "migration:create":  "ts-node-dev ./node_modules/typeorm/cli.js migration:create",
+    "migration:create": "ts-node-dev ./node_modules/typeorm/cli.js migration:create",
     "migration:generate": "npm run typeorm -- migration:generate ./src/shared/typeorm/migrations -d src/shared/typeorm/data-source.ts",
     "migration:run": "ts-node -r tsconfig-paths/register ./node_modules/typeorm/cli.js migration:run -d src/shared/typeorm/data-source.ts",
     "migration:revert": "npm run typeorm -- migration:revert -d src/shared/typeorm/data-source.ts"
@@ -44,6 +44,7 @@
     "@types/bcrypt": "^6.0.0",
     "bcrypt": "^6.0.0",
     "celebrate": "^15.0.3",
+    "class-transformer": "^0.5.1",
     "cors": "^2.8.5",
     "cross-env": "^10.1.0",
     "date-fns": "^4.1.0",

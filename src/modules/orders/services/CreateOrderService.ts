@@ -48,7 +48,7 @@ export class CreateOrderService {
 
     if (quantityAvailable.length) {
       throw new AppError(
-        `The quantity is not available for`, 409);
+        `The quantity is not available for `, 409);
     }
 
     const seriealizedProducts = products.map(product => {

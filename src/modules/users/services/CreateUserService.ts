@@ -1,7 +1,7 @@
-import { usersRespositories } from '../database/repositories/UserRepositories';
+import { usersRespositories } from '../infra/database/repositories/UserRepositories';
 import AppError from 'src/shared/errors/appError';
 import { hash } from 'bcrypt';
-import { User } from '../database/entities/Users';
+import { User } from '../infra/database/entities/Users';
 
 interface ICreateUser {
   name: string;

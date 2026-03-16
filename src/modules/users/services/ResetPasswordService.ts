@@ -1,5 +1,5 @@
-import { userTokenRepositories } from '../database/repositories/UserTokensRepositories';
-import { usersRespositories } from '../database/repositories/UserRepositories';
+import { userTokenRepositories } from '../infra/database/repositories/UserTokensRepositories';
+import { usersRespositories } from '../infra/database/repositories/UserRepositories';
 import AppError from 'src/shared/errors/appError';
 import { isAfter, addHours } from 'date-fns';
 import { hash } from 'bcrypt';

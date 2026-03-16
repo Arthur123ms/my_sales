@@ -1,9 +1,9 @@
 import AppError from 'src/shared/errors/appError';
-import { usersRespositories } from '../database/repositories/UserRepositories';
+import { usersRespositories } from '../infra/database/repositories/UserRepositories';
 import { promises as fs } from 'fs';
 import uploadConfig from '@config/upload';
 import path from 'path';
-import { User } from '../database/entities/Users';
+import { User } from '../infra/database/entities/Users';
 
 interface IUpdateUserAvatar {
   userId: number;

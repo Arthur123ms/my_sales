@@ -1,6 +1,6 @@
 import { compare } from 'bcrypt';
-import { User } from '../database/entities/Users';
-import { usersRespositories } from '../database/repositories/UserRepositories';
+import { User } from '../infra/database/entities/Users';
+import { usersRespositories } from '../infra/database/repositories/UserRepositories';
 import AppError from 'src/shared/errors/appError';
 import { Secret, sign } from 'jsonwebtoken';
 

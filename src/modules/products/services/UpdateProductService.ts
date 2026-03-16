@@ -1,6 +1,6 @@
 import AppError from 'src/shared/errors/appError';
-import { Product } from '../database/entities/Product';
-import { productsRepositories } from '../database/repositories/ProductsRepositories';
+import { Product } from '../infra/database/entities/Product';
+import { productsRepositories } from '../infra/database/repositories/ProductsRepositories';
 import RedisCache from 'src/shared/cache/RedisCache';
 
 interface IUpdateProduct {

@@ -4,7 +4,7 @@ import {
   createProductSchema,
   idParamsValidation,
   updateProductSchema,
-} from '../../../schemas/ProductSchemas';
+} from '../schemas/ProductSchemas';
 
 const productRouter = Router();
 const productController = new ProductsController();

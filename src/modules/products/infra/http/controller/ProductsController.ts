@@ -1,9 +1,9 @@
 import { Request, Response } from 'express';
-import ListProductService from '../services/LIstProductService';
-import ShowProductService from '../services/ShowProductService';
-import CreateProductService from '../services/CreateProductService';
-import UpdateProductService from '../services/UpdateProductService';
-import DeleteProductService from '../services/DeleteProductService';
+import ListProductService from 'src/modules/products/services/LIstProductService';
+import ShowProductService from 'src/modules/products/services/ShowProductService';
+import CreateProductService from 'src/modules/products/services/CreateProductService';
+import UpdateProductService from 'src/modules/products/services/UpdateProductService';
+import DeleteProductService from 'src/modules/products/services/DeleteProductService';
 
 export default class ProductsController {
   async index(request: Request, response: Response): Promise<Response> {
@@ -49,7 +49,7 @@ export default class ProductsController {
 
     const updateProductService = new UpdateProductService();
     const product = await updateProductService.execute({
-      id,
+      id: Number(id),
       name,
       price,
       quantity,
@@ -66,7 +66,7 @@ export default class ProductsController {
     }
 
     const deleteProductService = new DeleteProductService();
-    await deleteProductService.execute({ id });
+    await deleteProductService.execute({ id: Number(id) });
 
     return response.status(204).send();
   }

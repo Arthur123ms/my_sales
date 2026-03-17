@@ -1,26 +1,21 @@
 import AppError from 'src/shared/errors/appError';
-import { customerRespositories } from '../infra/database/repositories/CustomerRepositories';
 import { Customer } from '../infra/database/entities/Customer';
-
-interface ICreateCustomer {
-  name: string;
-  email: string;
-}
+import { ICreateCustomer } from '../domain/models/ICreateUser';
+import { ICustomerRepository } from '../domain/repositories/ICustomerRepositories';
 
 export default class CreateCustomerService {
+  constructor(private readonly customerRepositories: ICustomerRepository) {}
   public async execute({ name, email }: ICreateCustomer): Promise<Customer> {
-    const emailexists = await customerRespositories.findByEmail(email);
+    const emailexists = await this.customerRepositories.findByEmail(email);
 
     if (emailexists) {
       throw new AppError('Email address alrealdy used.', 409);
     }
 
-    const customer = customerRespositories.create({
+    const customer = await this.customerRepositories.create({
       name,
       email,
     });
-
-    await customerRespositories.save(customer);
 
     return customer;
   }

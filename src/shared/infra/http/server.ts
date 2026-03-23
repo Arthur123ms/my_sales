@@ -2,6 +2,7 @@ import 'dotenv/config';
 import express from 'express';
 import cors from 'cors';
 import { errors } from 'celebrate';
+import 'src/shared/containers/index'
 import routes from './routes';
 import { AppDataSource } from 'src/shared/infra/typeorm/data-source';
 import 'express-async-errors';

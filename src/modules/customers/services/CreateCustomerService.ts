@@ -2,9 +2,14 @@ import AppError from 'src/shared/errors/appError';
 import { Customer } from '../infra/database/entities/Customer';
 import { ICreateCustomer } from '../domain/models/ICreateUser';
 import { ICustomerRepository } from '../domain/repositories/ICustomerRepositories';
+import { inject, injectable } from 'tsyringe';
 
+@injectable()
 export default class CreateCustomerService {
-  constructor(private readonly customerRepositories: ICustomerRepository) {}
+  constructor(
+    @inject('CustomerRepository')
+    private readonly customerRepositories: ICustomerRepository,
+  ) {}
   public async execute({ name, email }: ICreateCustomer): Promise<Customer> {
     const emailexists = await this.customerRepositories.findByEmail(email);
 

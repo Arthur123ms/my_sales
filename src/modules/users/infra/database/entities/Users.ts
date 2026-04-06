@@ -11,9 +11,9 @@ import { Exclude, Expose } from 'class-transformer';
 @Entity('users')
 export class User {
   @PrimaryGeneratedColumn()
-  id: number;
+  id: string;
 
-  @Column()
+  @Column() 
   name: string;
 
   @Column()

@@ -2,19 +2,27 @@ import { Response, Request } from 'express';
 import ListUserService from '../../../services/ListUserSevice';
 import CreateUserService from '../../../services/CreateUserService';
 import { instanceToInstance } from 'class-transformer';
+import { container } from 'tsyringe';
 
 export default class UserController {
   async index(request: Request, response: Response): Promise<Response> {
-    const listUser = new ListUserService();
+    const { page, skip, take } = request.query;
 
-    const user = await listUser.execute();
-    return response.json(instanceToInstance(user));
+    const listUser = container.resolve(ListUserService);
+
+    const users = await listUser.execute({
+      page: Number(page),
+      skip: Number(skip),
+      take: Number(take),
+    });
+
+    return response.json(instanceToInstance(users));
   }
 
-  async create(request: Request, response: Response): Promise<Response> {
+  public async create(request: Request, response: Response): Promise<Response> {
     const { name, password, email } = request.body;
 
-    const createUser = new CreateUserService();
+    const createUser = container.resolve(CreateUserService);
     const user = await createUser.execute({
       email,
       password,

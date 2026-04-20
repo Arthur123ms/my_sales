@@ -1,21 +1,29 @@
 import 'reflect-metadata';
 import 'dotenv/config';
-import { DataSource } from 'typeorm';
-import { Product } from '@moodules/products/infra/database/entities/Product';
-import { User } from '@moodules/users/infra/database/entities/Users';
-import UserToken from '@moodules/users/infra/database/entities/UserToken';
-import { Customer } from '@moodules/customers/infra/database/entities/Customer';
-import { Order } from '@moodules/orders/infra/database/entities/Order';
-import { OrdersProducts } from '@moodules/orders/infra/database/entities/OrdersProducts';
+import { DataSource, DataSourceOptions } from 'typeorm';
 
-export const AppDataSource = new DataSource({
+const port = Number(process.env.PORT) || undefined;
+
+const baseDataSourceOptions = {
   type: 'postgres',
-  host: process.env.DB_HOST!,
-  port: Number(process.env.DB_PORT),
-  username: process.env.DB_USER!,
-  password: process.env.DB_PASS!,
-  database: process.env.DB_NAME!,
-  entities: [Product, User, UserToken, Customer, Order, OrdersProducts], // <-- ESSENCIAL
-  migrations: [__dirname + 'infra/typeorm/migrations/*.{ts,js}'],
-  synchronize: true,
-});
+  host: process.env.DB_HOST,
+  port: port,
+  username: process.env.DB_USER,
+  password: process.env.DB_PASS,
+  database: process.env.DB_NAME,
+  entities: [`./src/modules/**/infra/database/entities/*.{ts,js}`],
+  migrations: [`./src/shared/infra/typeorm/migrations/*.{ts,js}`],
+};
+
+const testDatabaseName = process.env.DB_NAME_TEST || process.env.DB_NAME;
+
+const appTestDataSourceOptions = {
+  ...baseDataSourceOptions,
+  database: testDatabaseName,
+};
+
+export const AppDataSource = new DataSource(
+  process.env.NODE_ENV === 'test'
+    ? (appTestDataSourceOptions as DataSourceOptions)
+    : (baseDataSourceOptions as DataSourceOptions),
+);

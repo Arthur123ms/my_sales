@@ -1,34 +1,44 @@
-import 'dotenv/config';
+import 'express-async-errors';
+import 'reflect-metadata';
 import express from 'express';
 import cors from 'cors';
-import { errors } from 'celebrate';
-import 'src/shared/containers/index'
 import routes from './routes';
 import { AppDataSource } from 'src/shared/infra/typeorm/data-source';
-import 'express-async-errors';
-import ErrorHandleMiddleware from 'src/shared/middlewares/ErrorHandleMiddleware';
+import ErrorHandlerMiddleware from 'src/shared/middlewares/ErrorHandleMiddleware';
+import { errors } from 'celebrate';
+import uploadConfig from '@config/upload';
 import rateLimiter from 'src/shared/middlewares/rateLimiter';
+import 'src/shared/containers/index';
 
-AppDataSource.initialize()
-  .then(async () => {
-    const app = express();
+const startServer = async () => {
+  await AppDataSource.initialize();
 
-    app.use(cors());
-    app.use(express.json());
+  const app = express();
 
-    app.use(rateLimiter);
+  app.use(cors());
+  app.use(express.json());
+  app.use(rateLimiter);
+  app.use('/files', express.static(uploadConfig.directory));
+  app.use(routes);
+  app.use(errors());
+  app.use(ErrorHandlerMiddleware.handleError);
 
-    app.use(errors());
-    app.use(routes);
+  console.log('Connected to the database! 🎉');
 
-    app.use(ErrorHandleMiddleware.handleError);
+  return app;
+};
+const server = startServer();
 
-    console.log('Connected to the database!!');
-
-    app.listen(3333, () => {
-      console.log('Server started on port 3333!');
+if (process.env.NODE_ENV !== 'test') {
+  server
+    .then(app => {
+      return app.listen(3333, () => {
+        console.log('Server started on port 3333! 🏆');
+      });
+    })
+    .catch(error => {
+      console.error('Failed to connect to the database:', error);
     });
-  })
-  .catch(error => {
-    console.error('Failed to connect to the database:', error);
-  });
+}
+
+export default server;

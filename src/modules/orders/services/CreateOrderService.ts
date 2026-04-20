@@ -1,25 +1,39 @@
-import { Order } from '../infra/database/entities/Order';
-import AppError from 'src/shared/errors/appError';
-import { productsRepositories } from '@moodules/products/infra/database/repositories/ProductsRepositories';
-import { orderRepositories } from '../infra/database/repositories/OrderRepositories';
+import AppError from 'src/shared/errors/appError';;
 import { Product } from '@moodules/products/infra/database/entities/Product';
+import { injectable, inject } from 'tsyringe';
+import { IOrderRepositories } from '../domain/repositories/IOrderRepositories';
+import { ICustomerRepository } from '@moodules/customers/domain/repositories/ICustomerRepositories';
+import { IOrder } from '../domain/models/IOrder';
 
-interface ICreateOrder {
+interface IProduct {
+  id: string;
+  quantity: number;
+}
+
+interface IRequest {
   customer_id: string;
   products: Product[];
 }
 
+@injectable()
 export class CreateOrderService {
-  async execute({ customer_id, products }: ICreateOrder): Promise<Order> {
-    const customerExists = await customerRepositories.findById(
-      Number(customer_id),
-    );
+  constructor(
+    @inject('OrdersRepositories')
+    private ordersRepositories: IOrderRepositories,
+    @inject('CustomerRepositories')
+    private customerRepositories: ICustomerRepository,
+    @inject('ProductsRepositories')
+    private productRepositories: IProductsRepositories,
+  ) {}
+
+  async execute({ customer_id, products }: IRequest): Promise<IOrder> {
+    const customerExists = await this.ordersRepositories.findById(customer_id);
 
     if (!customerExists) {
       throw new AppError('Could not find any customer with the given id.');
     }
 
-    const existsProducts = await productsRepositories.findAllByIds(products);
+    const existsProducts = await this.productRepositories.findAllByIds(products);
 
     if (!existsProducts.length) {
       throw new AppError('Could not find any products with the given ids.');
@@ -38,33 +52,25 @@ export class CreateOrderService {
       );
     }
 
-    const quantityAvailable = products.filter(product => {
-      const existsProduct = existsProducts.find(
-        productExisten => productExisten.id === product.id,
-      );
-      return existsProduct && existsProduct.quantity < product.quantity;
-    });
-
+    const quantityAvailable = products.filter(
+      product => 
+      existsProducts.filter((p => p.id === id)[0].quantity < product.quantity,
+    );
+     
+  
     if (quantityAvailable.length) {
-      throw new AppError(
-        `The quantity is not available for `, 409);
+      throw new AppError
+        (`The quantity ${quantityAvailable[0]?.quantity}
+        is not availabel fpr ${quantityAvailable[0]?.id} `, 409);
     }
 
     const seriealizedProducts = products.map(product => {
-      const productExists = existsProducts.find(p => p.id === product.id);
-
-      if (!productExists) {
-        throw new AppError(`Product ${product.id} not found.`);
-      }
-
-      return {
-        product_id: product.id,
-        quantity: product.quantity,
-        price: product.price,
-      };
+      product_id: product.id,
+      quantity: product.quantity,
+      price: existsProducts.filter(p => p.id === product.id)[0].price, 
     });
 
-    const order = await orderRepositories.createOrder({
+    const order = await this.ordersRepositories.create({
       customer: customerExists,
       products: seriealizedProducts,
     });
@@ -72,21 +78,12 @@ export class CreateOrderService {
     const { order_products } = order;
 
     const updateProductsQuantity = order_products.map(product => {
-      const productExists = existsProducts.find(
-        p => p.id === product.product.id,
-      );
-
-      if (!productExists) {
-        throw new AppError('Product not found during update.');
-      }
-
-      return {
-        id: product.product.id,
-        quantity: productExists.quantity - product.quantity,
-      };
+      id: product.product_id,
+      quantity: existsProducts.filter(p => p.id === product.product_id)[0].quantity -
+        product.quantity,
     });
 
-    await productsRepositories.save(updateProductsQuantity);
+    await this.productRepositories.updateStock(updateProductsQuantity);
 
     return order;
   }

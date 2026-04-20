@@ -1,26 +1,34 @@
 import { Response, Request } from 'express';
-import { ShowOrderService } from '../../../services/ShowOrderService';
-import { CreateOrderService } from '../../../services/CreateOrderService';
-import AppError from 'src/shared/errors/appError';
+import { container } from 'tsyringe'
+import ListOrderService from '@moodules/orders/services/ListOrderService';
+import { ShowOrderService } from '@moodules/orders/services/ShowOrderService';
+import { CreateOrderService } from '@moodules/orders/services/CreateOrderService';
 
-export class OrderControllers {
-  async show(request: Request, response: Response): Promise<Response> {
+export default class OrdersController {
+  public async index(request: Request, response: Response): Promise<Response> {
+    const page = request.query.page ? Number(request.query.page) : 1;
+    const limit = request.query.limit ? Number(request.query.limit) : 15;
+    const listOrders = container.resolve(ListOrderService);
+
+    const orders = await listOrders.execute({ page, limit });
+
+    return response.json(orders);
+  }
+
+  public async show(request: Request, response: Response): Promise<Response> {
     const { id } = request.params;
 
-    if (!id) {
-      throw new AppError('Order id is required');
-    }
+    const showOrder = container.resolve(ShowOrderService);
 
-    const showOrder = new ShowOrderService();
-
-    const order = await showOrder.execute(id);
+    const order = await showOrder.execute({ id: id! });
 
     return response.json(order);
   }
 
-  async create(request: Request, response: Response): Promise<Response> {
+  public async create(request: Request, response: Response): Promise<Response> {
     const { customer_id, products } = request.body;
-    const createOrder = new CreateOrderService();
+
+    const createOrder = container.resolve(CreateOrderService);
 
     const order = await createOrder.execute({
       customer_id,

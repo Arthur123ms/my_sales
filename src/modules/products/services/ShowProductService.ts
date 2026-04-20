@@ -1,19 +1,26 @@
 import AppError from 'src/shared/errors/appError';
-import { productsRepositories } from '../infra/database/repositories/ProductsRepositories';
 import { Product } from '../infra/database/entities/Product';
+import { injectable, inject } from 'tsyringe';
+import { IProductsRepositories } from '../domain/repositories/IProductsRepositories';
 
-interface IShowProduct {
+interface IRequest {
   id: string;
 }
 
+
+@injectable()
 export default class ShowProductService {
-  async execute({ id }: IShowProduct): Promise<Product>{
-    const product = await productsRepositories.findById(id);
+  constructor (
+    @inject('ProductRepositories')
+    private productRepositories: IProductsRepositories
+  ) {}
+  async execute({ id }: IRequest): Promise<Product>{
+    const product = await this.productRepositories.findById(Number(id));
 
     if (!product) {
       throw new AppError('Product not found!', 404);
     }
 
-    return product
+    return product as unknown as Product
   }
 }

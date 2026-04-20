@@ -1,23 +1,35 @@
 import RedisCache from 'src/shared/cache/RedisCache';
 import { Product } from '../infra/database/entities/Product';
-import { productsRepositories } from '../infra/database/repositories/ProductsRepositories';
+import { IProductsRepositories } from '../domain/repositories/IProductsRepositories';
+import { inject, injectable } from 'tsyringe';
+import { SearchParams } from '@moodules/users/infra/database/repositories/UserRepositories';
+import { IProductPaginate } from '../domain/models/IProductPaginate';
 
-export default class ListProductService {
-  async execute(): Promise<Product[]> {
+@injectable()
+class ListProductService {
+  constructor(
+    @inject('ProductsRepository')
+    private productsRepository: IProductsRepositories,
+  ) {}
+  public async execute({
+    page,
+    skip,
+    take,
+  }: SearchParams): Promise<IProductPaginate> {
     const redisCache = new RedisCache();
 
-    let products = await redisCache.recover<Product[]>(
-      'api-my-sales-PRODUCT_LIST',
+    let products = await redisCache.recover<IProductPaginate>(
+      'api-vendas-PRODUCT_LIST',
     );
 
     if (!products) {
-      products = await productsRepositories.find();
+      products = await this.productsRepository.findAll({ page, skip, take });
 
-      await redisCache.save(
-        'api-my-sales-PRODUCT_LIST',
-        JSON.stringify(products),
-      );
+      await redisCache.save('api-vendas-PRODUCT_LIST', JSON.stringify(products));
     }
-    return products;
+
+    return products as IProductPaginate;
   }
 }
+
+export default ListProductService;

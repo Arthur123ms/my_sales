@@ -1,4 +1,4 @@
-import { ICustomer } from '@moodules/customers/domain/models/ICustomer';
+import { ICustomer } from '@modules/customers/domain/models/ICustomer';
 import {
   Column,
   CreateDateColumn,

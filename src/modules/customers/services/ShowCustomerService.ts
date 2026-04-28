@@ -10,7 +10,7 @@ interface IShowCustomer {
 @injectable()
 export default class ShowCustomerService {
   constructor(
-    @inject('CustomerRepository')
+    @inject('CustomerRepositories')
     private readonly customerRepositories: ICustomerRepository,
   ) {}
 

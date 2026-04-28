@@ -6,7 +6,7 @@ import { injectable, inject } from 'tsyringe';
 @injectable()
 export default class LisCustomerService {
   constructor(
-    @inject('CustomerRepository')
+    @inject('CustomerRepositories')
     private readonly customerRepositories: ICustomerRepository,
   ) {}
 

@@ -7,7 +7,7 @@ import { inject, injectable } from 'tsyringe';
 @injectable()
 export default class CreateCustomerService {
   constructor(
-    @inject('CustomerRepository')
+    @inject('CustomerRepositories')
     private readonly customerRepositories: ICustomerRepository,
   ) {}
   public async execute({ name, email }: ICreateCustomer): Promise<Customer> {

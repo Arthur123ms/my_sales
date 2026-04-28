@@ -8,12 +8,12 @@ import {
   UpdateDateColumn,
 } from 'typeorm';
 import { Order } from './Order';
-import { Product } from '@moodules/products/infra/database/entities/Product';
+import { Product } from '@modules/products/infra/database/entities/Product';
 
 @Entity('orders_products')
 export class OrdersProducts {
   @PrimaryGeneratedColumn()
-  id: number;
+  id: string;
 
   @ManyToOne(() => Order, order => order.order_products)
   @JoinColumn({ name: 'order_id' })
@@ -27,7 +27,7 @@ export class OrdersProducts {
   product: Product;
 
   @Column()
-  product_id: number;
+  product_id: string;
 
   @Column()
   price: number;

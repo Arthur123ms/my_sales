@@ -1,8 +1,8 @@
 import AppError from 'src/shared/errors/appError';;
-import { Product } from '@moodules/products/infra/database/entities/Product';
+import { Product } from '@modules/products/infra/database/entities/Product';
 import { injectable, inject } from 'tsyringe';
 import { IOrderRepositories } from '../domain/repositories/IOrderRepositories';
-import { ICustomerRepository } from '@moodules/customers/domain/repositories/ICustomerRepositories';
+import { ICustomerRepository } from '@modules/customers/domain/repositories/ICustomerRepositories';
 import { IOrder } from '../domain/models/IOrder';
 
 interface IProduct {
@@ -55,7 +55,7 @@ export class CreateOrderService {
     const quantityAvailable = products.filter(
       product => 
       existsProducts.filter((p => p.id === id)[0].quantity < product.quantity,
-    );
+    ));
      
   
     if (quantityAvailable.length) {
@@ -64,11 +64,11 @@ export class CreateOrderService {
         is not availabel fpr ${quantityAvailable[0]?.id} `, 409);
     }
 
-    const seriealizedProducts = products.map(product => {
+    const seriealizedProducts = products.map(product => ({
       product_id: product.id,
       quantity: product.quantity,
-      price: existsProducts.filter(p => p.id === product.id)[0].price, 
-    });
+      price: existsProducts.filter(p => p.id === product.id)[0].price,
+    }));
 
     const order = await this.ordersRepositories.create({
       customer: customerExists,
@@ -77,11 +77,11 @@ export class CreateOrderService {
 
     const { order_products } = order;
 
-    const updateProductsQuantity = order_products.map(product => {
+    const updateProductsQuantity = order_products.map(product => ({
       id: product.product_id,
       quantity: existsProducts.filter(p => p.id === product.product_id)[0].quantity -
-        product.quantity,
-    });
+      product.quantity,
+    }));
 
     await this.productRepositories.updateStock(updateProductsQuantity);
 

@@ -10,7 +10,7 @@ interface IDeleteCustomerService {
 @injectable()
 export default class DeleteCustomerService {
   constructor (
-    @inject('CustomerRepository')
+    @inject('CustomerRepositories')
     private readonly customerRepositories: ICustomerRepository) { }
 
   public async execute({ id }: IDeleteCustomerService): Promise<void> {

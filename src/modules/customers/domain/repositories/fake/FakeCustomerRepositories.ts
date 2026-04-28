@@ -1,4 +1,4 @@
-import { Customer } from '@moodules/customers/infra/database/entities/Customer';
+import { Customer } from '@modules/customers/infra/database/entities/Customer';
 import { ICreateCustomer } from '../../models/ICreateUser';
 import { ICustomer } from '../../models/ICustomer';
 import { ICustomerRepository, Pagination } from '../ICustomerRepositories';

@@ -1,4 +1,4 @@
-import { Customer } from '@moodules/customers/infra/database/entities/Customer';
+import { Customer } from '@modules/customers/infra/database/entities/Customer';
 import {
   CreateDateColumn,
   Entity,
@@ -13,7 +13,7 @@ import { OrdersProducts } from './OrdersProducts';
 @Entity('orders')
 export class Order {
   @PrimaryGeneratedColumn()
-  id: number;
+  id: string;
 
   @ManyToOne(() => Customer)
   @JoinColumn({ name: 'customer_id' })
@@ -25,7 +25,7 @@ export class Order {
   order_products: OrdersProducts[];
 
   @CreateDateColumn()
-  create_at: Date;
+  created_at: Date;
 
   @UpdateDateColumn()
   update_at: Date;

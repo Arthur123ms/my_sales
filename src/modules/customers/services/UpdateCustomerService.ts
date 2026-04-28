@@ -12,7 +12,7 @@ interface IUpdateCustomer {
 @injectable()
 export default class UpdateCustomerService {
   constructor(
-    @inject('CustomerRepository')
+    @inject('CustomerRepositories')
     private readonly customerRepositories: ICustomerRepository,
   ) {}
 

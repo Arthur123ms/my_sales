@@ -4,11 +4,17 @@ import ShowProductService from 'src/modules/products/services/ShowProductService
 import CreateProductService from 'src/modules/products/services/CreateProductService';
 import UpdateProductService from 'src/modules/products/services/UpdateProductService';
 import DeleteProductService from 'src/modules/products/services/DeleteProductService';
-
+import { container } from 'tsyringe'
+ 
 export default class ProductsController {
   async index(request: Request, response: Response): Promise<Response> {
-    const listProductService = new ListProductService();
-    const products = await listProductService.execute();
+    const { page, skip, take } = request.query;
+    const listProductService = container.resolve(ListProductService);
+    const products = await listProductService.execute({
+      page: Number(page),
+      skip: Number(skip),
+      take: Number(take)
+    });
     return response.json(products);
   }
 
@@ -19,7 +25,7 @@ export default class ProductsController {
       return response.status(400).json({ error: 'Missing id' });
     }
 
-    const showProductService = new ShowProductService();
+    const showProductService = container.resolve( ShowProductService);
     const product = await showProductService.execute({ id });
 
     return response.json(product);
@@ -28,7 +34,7 @@ export default class ProductsController {
   async create(request: Request, response: Response): Promise<Response> {
     const { name, price, quantity } = request.body;
 
-    const createProductService = new CreateProductService();
+    const createProductService = container.resolve(CreateProductService);
     const product = await createProductService.execute({
       name,
       price,
@@ -47,7 +53,7 @@ export default class ProductsController {
 
     const { name, price, quantity } = request.body;
 
-    const updateProductService = new UpdateProductService();
+    const updateProductService = container.resolve(UpdateProductService);
     const product = await updateProductService.execute({
       id: Number(id),
       name,
@@ -65,7 +71,7 @@ export default class ProductsController {
       return response.status(400).json({ error: 'Missing id' });
     }
 
-    const deleteProductService = new DeleteProductService();
+    const deleteProductService = container.resolve(DeleteProductService);
     await deleteProductService.execute({ id: Number(id) });
 
     return response.status(204).send();

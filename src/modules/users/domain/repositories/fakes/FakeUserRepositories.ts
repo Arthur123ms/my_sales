@@ -1,5 +1,5 @@
 import { v4 as uuidv4 } from 'uuid';
-import { User } from '@moodules/users/infra/database/entities/Users';
+import { User } from '@modules/users/infra/database/entities/Users';
 import { ICreateUser } from '../../models/ICreateUser';
 import { IPaginateUser } from '../../models/IPaginateUser';
 import { IUser } from '../../models/IUser';

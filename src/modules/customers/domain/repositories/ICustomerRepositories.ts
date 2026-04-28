@@ -6,7 +6,7 @@ export interface Pagination {
   skip: number;
 }
 
-export interface ICustomerRepository {
+export interface ICustomerRepositories {
   findByEmail(email: string): Promise<ICustomer | null>;
   create(data: ICreateCustomer): Promise<ICustomer>;
   save(customer: ICustomer): Promise<ICustomer>;

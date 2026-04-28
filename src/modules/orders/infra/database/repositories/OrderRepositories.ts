@@ -1,37 +1,62 @@
+import { Repository } from 'typeorm';
+import { ICreateOrder } from '@modules/orders/domain/models/ICreateOrder';
+import { IOrderRepositories } from '@modules/orders/domain/repositories/IOrderRepositories'
 import { AppDataSource } from 'src/shared/infra/typeorm/data-source';
-import { Order } from '../entities/Order';
-import { Customer } from '@moodules/customers/infra/database/entities/Customer';
+import { IOrder } from '@modules/orders/domain/models/IOrder';
+import { IOrderPagination } from '@modules/orders/domain/models/IOrderPagination';
+import  { Order }  from '../entities/Order';
 
+type SearchParams = {
+  page: number;
+  skip: number;
+  take: number;
+};
 
-interface ICreateOrder {
-  customer: Customer;
-  products: ICreateOrderProducts[];
-}
+class OrdersRepositories implements IOrderRepositories {
+  private ormRepository: Repository<Order>;
 
-interface ICreateOrderProducts {
-  product_id: number,
-  price: number,
-  quantity: number
-}
+  constructor() {
+    this.ormRepository = AppDataSource.getRepository(Order);
+  }
 
-export const orderRepositories = AppDataSource.getRepository(Order).extend({
-  async findById(id: number): Promise<Order | null> {
-    const order = await this.findOne({
-      where: { id },
-      relations: ['orders_products', 'customers'],
+  public async findById(id: string): Promise<IOrder | null> {
+    const order = await this.ormRepository.findOne({
+      where: {id} ,
+      relations: ['order_products', 'customer'],
     });
 
     return order;
-  },
+  }
 
-  async createOrder({ customer, products }: ICreateOrder): Promise<Order> {
-    const order = this.create({
+  public async findAll({
+    page,
+    skip,
+    take,
+  }: SearchParams): Promise<IOrderPagination> {
+    const [orders, count] = await this.ormRepository
+      .createQueryBuilder()
+      .skip(skip)
+      .take(take)
+      .getManyAndCount();
+
+    return {
+      per_page: take,
+      total: count,
+      current_page: page,
+      data: orders,
+    };
+  }
+
+  public async create({ customer, products }: ICreateOrder): Promise<IOrder> {
+    const order = this.ormRepository.create({
       customer,
       order_products: products,
     });
 
-    await this.save(order);
+    await this.ormRepository.save(order);
 
     return order;
-  },
-});
+  }
+}
+
+export default OrdersRepositories;

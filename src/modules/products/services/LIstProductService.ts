@@ -2,7 +2,7 @@ import RedisCache from 'src/shared/cache/RedisCache';
 import { Product } from '../infra/database/entities/Product';
 import { IProductsRepositories } from '../domain/repositories/IProductsRepositories';
 import { inject, injectable } from 'tsyringe';
-import { SearchParams } from '@moodules/users/infra/database/repositories/UserRepositories';
+import { SearchParams } from '@modules/users/infra/database/repositories/UserRepositories';
 import { IProductPaginate } from '../domain/models/IProductPaginate';
 
 @injectable()

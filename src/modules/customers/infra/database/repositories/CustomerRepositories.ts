@@ -1,14 +1,14 @@
 import { AppDataSource } from 'src/shared/infra/typeorm/data-source';
 import { Customer } from '../entities/Customer';
 import {
-  ICustomerRepository,
+  ICustomerRepositories,
   Pagination,
 } from '../../../domain/repositories/ICustomerRepositories';
-import { ICreateCustomer } from '@moodules/customers/domain/models/ICreateUser';
-import { ICustomer } from '@moodules/customers/domain/models/ICustomer';
+import { ICreateCustomer } from '@modules/customers/domain/models/ICreateUser';
+import { ICustomer } from '@modules/customers/domain/models/ICustomer';
 import { Repository } from 'typeorm';
 
-export default class customerRepository implements ICustomerRepository {
+export default class CustomerRepositories implements ICustomerRepositories {
   private ormRepository: Repository<Customer>;
 
   constructor() {

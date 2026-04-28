@@ -1,5 +1,4 @@
 import RedisCache from 'src/shared/cache/RedisCache';
-import { Product } from '../infra/database/entities/Product';
 import { IProductsRepositories } from '../domain/repositories/IProductsRepositories';
 import { inject, injectable } from 'tsyringe';
 import { SearchParams } from '@modules/users/infra/database/repositories/UserRepositories';

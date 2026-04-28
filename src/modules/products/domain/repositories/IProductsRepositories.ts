@@ -17,7 +17,7 @@ export interface IProductsRepositories {
   findByName(name: string): Promise<IProducts | null>
   findById(id: number): Promise<IProducts | null>
   findAll({ page, take, skip }: SearchParams): Promise<IProductPaginate>
-  findAllById(products: IFindProducts[]): Promise<IProducts[]>
+  findAllByIds(products: IFindProducts[]): Promise<IProducts[]>
   create(data: ICreateProducts): Promise<IProducts>
   save(product: IProducts): Promise<IProducts>
   updateStock(products: IUpdateStockProduct[]): Promise<void>

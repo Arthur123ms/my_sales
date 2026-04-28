@@ -13,7 +13,7 @@ export class Product {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @OneToMany(() => OrdersProducts, order_products => order_products.product)
+  @OneToMany(() => OrdersProducts, order_products => order_products.products)
   order_products: OrdersProducts[];
 
   @Column({ type: 'text' })
@@ -26,8 +26,8 @@ export class Product {
   quantity: number;
 
   @CreateDateColumn({ type: 'timestamp', name: 'created_at' })
-  createdAt: Date;
+  created_at: Date;
 
   @UpdateDateColumn({ type: 'timestamp', name: 'updated_at' })
-  updatedAt: Date;
+  updated_at: Date;
 }

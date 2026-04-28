@@ -4,6 +4,7 @@ import { IOrderRepositories } from '@modules/orders/domain/repositories/IOrderRe
 import OrdersRepositories from '@modules/orders/infra/database/repositories/OrderRepositories';
 import { IProductsRepositories } from '@modules/products/domain/repositories/IProductsRepositories';
 import ProductsRepositories from '@modules/products/infra/database/repositories/ProductsRepositories';
+
 import { IUserRepositories } from '@modules/users/domain/repositories/fakes/IUserRepositories';
 import UsersRepositories from '@modules/users/infra/database/repositories/UserRepositories';
 import { container } from 'tsyringe';

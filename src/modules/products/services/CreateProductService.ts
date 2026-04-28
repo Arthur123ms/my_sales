@@ -1,5 +1,4 @@
 import AppError from 'src/shared/errors/appError';
-import { productsRepositories } from '../infra/database/repositories/ProductsRepositories';;
 import RedisCache from 'src/shared/cache/RedisCache';
 import { injectable, inject } from 'tsyringe';
 import { IProductsRepositories } from '../domain/repositories/IProductsRepositories';

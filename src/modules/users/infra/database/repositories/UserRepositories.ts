@@ -1,10 +1,10 @@
-import { ICreateUser } from '@moodules/users/domain/models/ICreateUser';
-import { IPaginateUser } from '@moodules/users/domain/models/IPaginateUser';
+import { ICreateUser } from '@modules/users/domain/models/ICreateUser';
+import { IPaginateUser } from '@modules/users/domain/models/IPaginateUser';
 import { IUserRepositories } from 'src/modules/users/domain/repositories/fakes/IUserRepositories';
 import { Repository } from 'typeorm';
 import { User } from '../entities/Users';
 import { AppDataSource } from 'src/shared/infra/typeorm/data-source';
-import { IUser } from '@moodules/users/domain/models/IUser';
+import { IUser } from '@modules/users/domain/models/IUser';
 
 export type SearchParams = {
   page: number;

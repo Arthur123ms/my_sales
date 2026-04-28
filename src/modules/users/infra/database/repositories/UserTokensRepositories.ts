@@ -1,8 +1,8 @@
-import { IUserTokenRepositories } from '@moodules/users/domain/repositories/fakes/IUserTokenRepositories';
+import { IUserTokenRepositories } from '@modules/users/domain/repositories/fakes/IUserTokenRepositories';
 import { AppDataSource } from 'src/shared/infra/typeorm/data-source';
 import { Repository } from 'typeorm';
 import UserToken from '../entities/UserToken';
-import { IUserToken } from '@moodules/users/domain/models/IUserToken';
+import { IUserToken } from '@modules/users/domain/models/IUserToken';
 
 export default class UserTokensRepositories implements IUserTokenRepositories {
   private ormRepository: Repository<UserToken>;

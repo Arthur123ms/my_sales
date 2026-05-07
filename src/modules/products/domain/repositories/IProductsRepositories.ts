@@ -15,7 +15,7 @@ type SearchParams = {
 
 export interface IProductsRepositories {
   findByName(name: string): Promise<IProducts | null>
-  findById(id: number): Promise<IProducts | null>
+  findById(id: string): Promise<IProducts | null>
   findAll({ page, take, skip }: SearchParams): Promise<IProductPaginate>
   findAllByIds(products: IFindProducts[]): Promise<IProducts[]>
   create(data: ICreateProducts): Promise<IProducts>

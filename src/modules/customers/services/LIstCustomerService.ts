@@ -1,13 +1,13 @@
 import { IPagination } from 'src/shared/interface/pagination.interface';
 import { Customer } from '../infra/database/entities/Customer';
-import { ICustomerRepository } from '../domain/repositories/ICustomerRepositories';
+import { ICustomerRepositories } from '../domain/repositories/ICustomerRepositories';
 import { injectable, inject } from 'tsyringe';
 
 @injectable()
 export default class LisCustomerService {
   constructor(
     @inject('CustomerRepositories')
-    private readonly customerRepositories: ICustomerRepository,
+    private readonly customerRepositories: ICustomerRepositories,
   ) {}
 
   async execute(

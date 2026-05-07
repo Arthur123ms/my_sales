@@ -12,7 +12,7 @@ import { OrdersProducts } from './OrdersProducts';
 
 @Entity('orders')
 export class Order {
-  @PrimaryGeneratedColumn()
+  @PrimaryGeneratedColumn('uuid')
   id: string;
 
   @ManyToOne(() => Customer)
@@ -28,5 +28,5 @@ export class Order {
   created_at: Date;
 
   @UpdateDateColumn()
-  update_at: Date;
+  updated_at: Date;
 }

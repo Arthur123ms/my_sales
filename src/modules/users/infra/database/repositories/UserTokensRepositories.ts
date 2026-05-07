@@ -1,4 +1,4 @@
-import { IUserTokenRepositories } from '@modules/users/domain/repositories/fakes/IUserTokenRepositories';
+import { IUserTokenRepositories } from '@modules/users/domain/repositories/IUserTokenRepositories';
 import { AppDataSource } from 'src/shared/infra/typeorm/data-source';
 import { Repository } from 'typeorm';
 import UserToken from '../entities/UserToken';
@@ -16,7 +16,7 @@ export default class UserTokensRepositories implements IUserTokenRepositories {
       token,
     });
 
-    return userToken as unknown as IUserToken;
+    return userToken;
   }
 
   public async generate(user_id: string): Promise<IUserToken> {
@@ -26,6 +26,6 @@ export default class UserTokensRepositories implements IUserTokenRepositories {
 
     await this.ormRepository.save(userToken);
 
-    return userToken as unknown as IUserToken;
+    return userToken;
   }
 }

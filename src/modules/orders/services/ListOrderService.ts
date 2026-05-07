@@ -10,7 +10,7 @@ interface SearchParams {
 @injectable()
 export default class ListOrderService{
   constructor (
-    @inject('OrderRepositories')
+    @inject('OrdersRepositories')
     private ordersRepositories: IOrderRepositories
   ) {}
 

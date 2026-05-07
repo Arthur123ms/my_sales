@@ -4,7 +4,7 @@ import { sign } from 'jsonwebtoken';
 import 'dotenv/config';
 import 'reflect-metadata';
 import { inject, injectable } from 'tsyringe';
-import { IUserRepositories } from '../domain/repositories/fakes/IUserRepositories';
+import { IUserRepositories } from '../domain/repositories/IUserRepositories';
 import { User } from '../infra/database/entities/Users';
 
 interface IRequest {
@@ -19,11 +19,11 @@ interface IResponse {
 @injectable()
 class CreateSessionsService {
   constructor(
-    @inject('UsersRepository')
-    private usersRepository: IUserRepositories,
+    @inject('UsersRepositories')
+    private usersRepositories: IUserRepositories,
   ) {}
   public async execute({ email, password }: IRequest): Promise<IResponse> {
-    const user = await this.usersRepository.findByEmail(email);
+    const user = await this.usersRepositories.findByEmail(email);
 
     if (!user) {
       throw new AppError('Incorrect email/password combination.', 401);

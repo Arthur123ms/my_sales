@@ -3,5 +3,5 @@ export interface IUserToken {
   user_id: string;
   token: string;
   created_at: Date;
-  updated_at: Date;
+  update_at: Date;
 }

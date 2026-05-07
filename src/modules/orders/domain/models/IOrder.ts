@@ -7,5 +7,5 @@ export interface IOrder{
   customer: ICustomer,
   order_products: ICreateOrderProducts[],
   created_at: Date,
-  update_at: Date
+  updated_at: Date
 }

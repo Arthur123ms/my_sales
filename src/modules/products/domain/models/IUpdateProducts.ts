@@ -1,5 +1,5 @@
 export interface IUpdateProducts {
-  id: number,
+  id: string,
   quantity: number,
   price: number,
   name: string,

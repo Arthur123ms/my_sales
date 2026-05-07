@@ -5,6 +5,7 @@ import { ICreateProducts } from '@modules/products/domain/models/ICreateProducts
 import { IProductPaginate } from '@modules/products/domain/models/IProductPaginate';
 import { AppDataSource } from 'src/shared/infra/typeorm/data-source';
 import { Product } from '../entities/Product';
+import { IProducts } from '@modules/products/domain/models/IProducts';
 import { IUpdateStockProduct } from '@modules/products/domain/models/IUpdateStockProduct ';
 
 type SearchParams = {
@@ -24,7 +25,7 @@ class ProductsRepository implements IProductsRepositories {
     name,
     price,
     quantity,
-  }: ICreateProducts): Promise<Product> {
+  }: ICreateProducts): Promise<IProducts> {
     const product = this.ormRepository.create({ name, price, quantity });
 
     await this.ormRepository.save(product);
@@ -32,7 +33,7 @@ class ProductsRepository implements IProductsRepositories {
     return product;
   }
 
-  public async save(product: Product): Promise<Product> {
+  public async save(product: IProducts): Promise<IProducts> {
     await this.ormRepository.save(product);
 
     return product;
@@ -46,15 +47,15 @@ class ProductsRepository implements IProductsRepositories {
     await this.ormRepository.save(products);
   }
 
-  public async findByName(name: string): Promise<Product | null> {
-    const product = this.ormRepository.findOneBy({
+  public async findByName(name: string): Promise<IProducts | null> {
+    const product = await this.ormRepository.findOneBy({
       name,
     });
 
     return product;
   }
 
-  public async findById(id: number): Promise<Product | null> {
+  public async findById(id: string): Promise<IProducts | null> {
     const product = this.ormRepository.findOneBy({ id });
 
     return product;
@@ -81,7 +82,7 @@ class ProductsRepository implements IProductsRepositories {
     return result;
   }
 
-  public async findAllByIds(products: IFindProducts[]): Promise<Product[]> {
+  public async findAllByIds(products: IFindProducts[]): Promise<IProducts[]> {
     const productIds = products.map(product => product.id);
 
     const existentProducts = await this.ormRepository.find({

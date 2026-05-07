@@ -2,7 +2,7 @@ import 'reflect-metadata';
 import 'dotenv/config';
 import { DataSource, DataSourceOptions } from 'typeorm';
 
-const port = Number(process.env.PORT) || undefined;
+const port = Number(process.env.DB_PORT) || 5432;
 
 const baseDataSourceOptions = {
   type: 'postgres',

@@ -1,6 +1,6 @@
 import { inject } from 'tsyringe';
 import AppError from 'src/shared/errors/appError';
-import { IUserRepositories } from '../domain/repositories/fakes/IUserRepositories';
+import { IUserRepositories } from '../domain/repositories/IUserRepositories';
 import { User } from '../infra/database/entities/Users';
 
 interface IRequest {
@@ -9,14 +9,14 @@ interface IRequest {
 
 export default class ShowProfileService {
   constructor(
-    @inject('UserRepositories')
-    private userRepositories: IUserRepositories,
+    @inject('UsersRepositories')
+    private usersRepositories: IUserRepositories,
   ) {}
   public async execute({ user_id }: IRequest): Promise<User> {
-    const user = await this.userRepositories.findById(user_id);
+    const user = await this.usersRepositories.findById(user_id);
 
     if (!user) {
-      throw new AppError('User not found', 404);
+      throw new AppError('User not found.', 404);
     }
 
     return user;

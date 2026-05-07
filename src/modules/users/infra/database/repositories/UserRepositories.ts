@@ -1,6 +1,6 @@
 import { ICreateUser } from '@modules/users/domain/models/ICreateUser';
 import { IPaginateUser } from '@modules/users/domain/models/IPaginateUser';
-import { IUserRepositories } from 'src/modules/users/domain/repositories/fakes/IUserRepositories';
+import { IUserRepositories } from 'src/modules/users/domain/repositories/IUserRepositories';
 import { Repository } from 'typeorm';
 import { User } from '../entities/Users';
 import { AppDataSource } from 'src/shared/infra/typeorm/data-source';
@@ -24,7 +24,7 @@ export default class UsersRepository implements IUserRepositories {
 
     await this.ormRepository.save(user);
 
-    return user as IUser;
+    return user;
   }
 
   public async save(user: User): Promise<void> {
@@ -49,7 +49,7 @@ export default class UsersRepository implements IUserRepositories {
       data: users,
     };
 
-    return result as IPaginateUser;
+    return result;
   }
 
   public async findByName(name: string): Promise<IUser | null> {
@@ -57,7 +57,7 @@ export default class UsersRepository implements IUserRepositories {
       name,
     });
 
-    return user as IUser;
+    return user;
   }
 
   public async findById(id: string): Promise<IUser | null> {
@@ -65,7 +65,7 @@ export default class UsersRepository implements IUserRepositories {
       id,
     });
 
-    return user as IUser;
+    return user;
   }
 
   public async findByEmail(email: string): Promise<IUser | null> {
@@ -73,6 +73,6 @@ export default class UsersRepository implements IUserRepositories {
       email,
     });
 
-    return user as IUser;
+    return user;
   }
 }

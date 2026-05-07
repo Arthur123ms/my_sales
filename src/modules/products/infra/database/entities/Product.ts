@@ -10,8 +10,8 @@ import {
 
 @Entity('products')
 export class Product {
-  @PrimaryGeneratedColumn()
-  id: number;
+  @PrimaryGeneratedColumn('uuid')
+  id: string;
 
   @OneToMany(() => OrdersProducts, order_products => order_products.products)
   order_products: OrdersProducts[];

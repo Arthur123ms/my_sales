@@ -5,7 +5,7 @@ import { injectable, inject } from 'tsyringe';
 import { IProductsRepositories } from '../domain/repositories/IProductsRepositories';
 
 interface IRequest {
-  id: number;
+  id: string;
   name: string;
   price: number;
   quantity: number;
@@ -14,7 +14,7 @@ interface IRequest {
 @injectable()
 export default class UpdateProductService {
   constructor(
-    @inject('ProductRepositories')
+    @inject('ProductsRepositories')
     private productsRepositories: IProductsRepositories,
   ) {}
   async execute({ id, name, price, quantity }: IRequest): Promise<Product> {

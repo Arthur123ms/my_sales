@@ -1,8 +1,8 @@
 import { Response, Request } from 'express';
-import { container } from 'tsyringe'
-import ListOrderService from '@moodules/orders/services/ListOrderService';
-import { ShowOrderService } from '@moodules/orders/services/ShowOrderService';
-import { CreateOrderService } from '@moodules/orders/services/CreateOrderService';
+import { container } from 'tsyringe';
+import ListOrderService from '@modules/orders/services/ListOrderService';
+import { ShowOrderService } from '@modules/orders/services/ShowOrderService';
+import { CreateOrderService } from '@modules/orders/services/CreateOrderService';
 
 export default class OrdersController {
   public async index(request: Request, response: Response): Promise<Response> {

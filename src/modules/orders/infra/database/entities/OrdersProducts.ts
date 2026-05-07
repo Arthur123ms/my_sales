@@ -12,7 +12,7 @@ import { Product } from '@modules/products/infra/database/entities/Product';
 
 @Entity('orders_products')
 export class OrdersProducts {
-  @PrimaryGeneratedColumn()
+  @PrimaryGeneratedColumn('uuid')
   id: string;
 
   @ManyToOne(() => Order, order => order.order_products)
@@ -20,7 +20,7 @@ export class OrdersProducts {
   order: Order;
 
   @Column()
-  order_id: number;
+  order_id: string;
 
   @ManyToOne(() => Product, product => product.order_products)
   @JoinColumn({ name: 'product_id' })

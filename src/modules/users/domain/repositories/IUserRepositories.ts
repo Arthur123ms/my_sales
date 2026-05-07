@@ -1,6 +1,6 @@
-import { ICreateUser } from '../../models/ICreateUser';
-import { IPaginateUser } from '../../models/IPaginateUser';
-import { IUser } from '../../models/IUser';
+import { ICreateUser } from '../models/ICreateUser';
+import { IUser } from '../models/IUser';
+import { IPaginateUser } from '../models/IPaginateUser'
 
 type SearchParams = {
   page: number;

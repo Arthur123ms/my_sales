@@ -4,7 +4,7 @@ import uploadConfig from '@config/upload';
 import path from 'path';
 import { User } from '../infra/database/entities/Users';
 import { inject, injectable } from 'tsyringe';
-import { IUserRepositories } from '../domain/repositories/fakes/IUserRepositories';
+import { IUserRepositories } from '../domain/repositories/IUserRepositories';
 
 interface IRequest {
   userId: string;
@@ -14,14 +14,14 @@ interface IRequest {
 @injectable()
 export default class UpdateUserAvatarService {
   constructor(
-    @inject('UserRepositories')
-    private userRepositories: IUserRepositories
+    @inject('UsersRepositories')
+    private usersRepositories: IUserRepositories
   ) {}
   async execute({ userId, avatarFileName }: IRequest): Promise<User> {
-    const user = await this.userRepositories.findById(userId);
+    const user = await this.usersRepositories.findById(userId);
 
     if (!user) {
-      throw new AppError('User not found!', 404);
+      throw new AppError('User not found.', 404);
     }
 
     if (user.avatar) {
@@ -35,7 +35,7 @@ export default class UpdateUserAvatarService {
 
     user.avatar = avatarFileName;
 
-    await this.userRepositories.save(user);
+    await this.usersRepositories.save(user);
     return user;
   }
 }

@@ -1,6 +1,6 @@
 import AppError from 'src/shared/errors/appError';
 import { Customer } from '../infra/database/entities/Customer';
-import { ICustomerRepository } from '../domain/repositories/ICustomerRepositories';
+import { ICustomerRepositories } from '../domain/repositories/ICustomerRepositories';
 import { injectable, inject } from 'tsyringe';
 
 interface IUpdateCustomer {
@@ -13,7 +13,7 @@ interface IUpdateCustomer {
 export default class UpdateCustomerService {
   constructor(
     @inject('CustomerRepositories')
-    private readonly customerRepositories: ICustomerRepository,
+    private readonly customerRepositories: ICustomerRepositories,
   ) {}
 
   public async execute({

@@ -1,3 +1,3 @@
 export interface IShowProducts {
-  id: number,
+  id: string,
 }

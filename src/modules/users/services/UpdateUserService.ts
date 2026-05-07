@@ -1,7 +1,7 @@
 import { inject, injectable } from 'tsyringe';
 import { compare, hash } from 'bcrypt';
 import AppError from 'src/shared/errors/appError';
-import { IUserRepositories } from '../domain/repositories/fakes/IUserRepositories';
+import { IUserRepositories } from '../domain/repositories/IUserRepositories';
 import { User } from '../infra/database/entities/Users';
 
 interface IRequest {
@@ -15,8 +15,8 @@ interface IRequest {
 @injectable()
 class UpdateProfileService {
   constructor(
-    @inject('userRepositories')
-    private userRepositories: IUserRepositories,
+    @inject('usersRepositories')
+    private usersRepositories: IUserRepositories,
   ) {}
 
   public async execute({
@@ -26,14 +26,14 @@ class UpdateProfileService {
     password,
     old_password,
   }: IRequest): Promise<User> {
-    const user = await this.userRepositories.findById(user_id);
+    const user = await this.usersRepositories.findById(user_id);
 
     if (!user) {
       throw new AppError('User not found.');
     }
 
     if (email) {
-      const userUpdateEmail = await this.userRepositories.findByEmail(email);
+      const userUpdateEmail = await this.usersRepositories.findByEmail(email);
 
       if (userUpdateEmail) {
         throw new AppError('There is already one user with this email.', 409);
@@ -59,7 +59,7 @@ class UpdateProfileService {
       user.name = name;
     }
 
-    await this.userRepositories.save(user);
+    await this.usersRepositories.save(user);
 
     return user;
   }

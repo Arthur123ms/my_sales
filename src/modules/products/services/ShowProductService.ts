@@ -11,11 +11,11 @@ interface IRequest {
 @injectable()
 export default class ShowProductService {
   constructor (
-    @inject('ProductRepositories')
-    private productRepositories: IProductsRepositories
+    @inject('ProductsRepositories')
+    private productsRepositories: IProductsRepositories
   ) {}
   async execute({ id }: IRequest): Promise<Product>{
-    const product = await this.productRepositories.findById(Number(id));
+    const product = await this.productsRepositories.findById(id);
 
     if (!product) {
       throw new AppError('Product not found!', 404);
